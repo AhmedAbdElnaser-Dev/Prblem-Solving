@@ -10,22 +10,22 @@ namespace Problem_Solving
     {
         public double FindMaxAverage(int[] nums, int k)
         {
-            var ans = nums.Take(k);
 
-            var avg = ans.Average();
+            int windowSum = 0;
+            for (int i = 0; i < k; i++)
+            {
+                windowSum += nums[i];
+            }
 
-            double max = ans.Average();
+            int maxSum = windowSum;
 
             for (int i = k; i < nums.Length; i++)
             {
-                var temp = avg * k - nums[i - k] + nums[i];
-                avg = temp / k;
-                if (avg > max)
-                {
-                    max = avg;
-                }
+                windowSum += nums[i] - nums[i - k];
+                maxSum = Math.Max(maxSum, windowSum);
             }
-            return max;
+
+            return (double)maxSum / k;
         }
     }
 }
